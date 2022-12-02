@@ -1,4 +1,4 @@
-with open('1-input.txt', 'r') as f:
+with open('input.txt', 'r') as f:
 
     line = f.readline()
     accumulator = int(line)
@@ -10,8 +10,10 @@ with open('1-input.txt', 'r') as f:
             accumulator = 0
         elif (line == ""):
             totals.append(accumulator)
-            totals.sort()
-            last3 = totals[-3:]
-            print(sum(last3))
+            print(max(totals))
         else:
             accumulator += int(line)
+
+    totals.sort()
+    last3 = totals[-3:]
+    print(sum(last3))
