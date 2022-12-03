@@ -17,16 +17,38 @@ def process_rucksack(string):
     first, second = split_rucksack(string)
     find_dupes(first, second)
 
-def answer():
+def answer1():
     print(dupes)
     print(sum(list(map(letter_value, dupes))))
 
-with open('input-example.txt', 'r') as f:
-    line = f.readline()
-    process_rucksack(line)
-    while line:
-        line = f.readline()
-        if (line != ''):
-            process_rucksack(line)
+# part 1
+# with open('input-example.txt', 'r') as f:
+#     line = f.readline()
+#     process_rucksack(line)
+#     while line:
+#         line = f.readline()
+#         if (line != ''):
+#             process_rucksack(line)
 
-answer()
+def process_cohort():
+    find_dupes(cohort[0], cohort[1], cohort[2])
+    find_dupes(cohort[3], cohort[4], cohort[5])
+    print(cohort)
+    return cohort
+
+cohort = []
+
+with open('input.txt') as f:
+    lines = f.read().splitlines()
+    for i, x in enumerate(lines):
+        if (i % 6 == 0):
+            cohort.clear()
+
+        cohort.append(x)
+        print(i % 3);
+        print(i % 6); #new compare
+        if(i % 6 == 5):
+            process_cohort();
+
+
+answer1()
