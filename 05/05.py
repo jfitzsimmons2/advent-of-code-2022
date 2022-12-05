@@ -4,6 +4,7 @@ stacks = [];
 for i in range(9):
     stacks.append([])
 
+# No hardcoded stacks for this guy
 def parse_stack(line):
     global stacks
 
