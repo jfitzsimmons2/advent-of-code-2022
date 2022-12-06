@@ -1,6 +1,5 @@
 from collections import Counter
 
-
 def find_dup_char(input):
     print("Checking", input)
     WC = Counter(input)
@@ -14,7 +13,6 @@ def find_dup_char(input):
 with open('input.txt') as f:
     lines = f.read().splitlines()
 
-    # First pass, get number of stacks
     buffer = ""
     for line in lines:
         print(line)

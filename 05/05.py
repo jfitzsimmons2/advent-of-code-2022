@@ -1,8 +1,11 @@
 import re
 
 stacks = [];
-for i in range(9):
-    stacks.append([])
+
+def create_stacks(num):
+    global stacks;
+    for i in range(num):
+        stacks.append([])
 
 # No hardcoded stacks for this guy
 def parse_stack(line):
@@ -25,6 +28,16 @@ def parse_stack(line):
 with open('input.txt') as f:
     lines = f.read().splitlines()
 
+    # First pass, get number of stacks
+    for x in lines:
+        line = x.split();
+        print(line[0])
+        if (line[0] == "1"):
+            print("numbers")
+            create_stacks(int(line[len(line)-1]))
+            break
+
+    # second pass
     for x in lines:
         if (parse_stack(x)):
             continue
