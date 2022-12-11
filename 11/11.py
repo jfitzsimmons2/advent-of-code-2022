@@ -1,6 +1,8 @@
-from decimal import Decimal
 import sys
 from functools import reduce
+mod = 1
+
+## run python 11.py input.txt
 
 class Monkey:
     items = []
@@ -15,7 +17,12 @@ class Monkey:
         res = 0
         str = " ".join(self.operation[2:]);
         res = eval(str)
-        res = res%mod
+        
+        if (mod == 1):
+            res = int(res/3)
+        else:
+            res = res%mod
+        
         divisible = not res % int(self.test[2])
 
         if (divisible):
@@ -28,10 +35,6 @@ class Monkey:
             self.inspects += 1
             old = self.items.pop(0)
             self.do_operation(old)
-
-mod = 1
-monkeys = []
-monkey = Monkey()
 
 
 def parse_line(parts):
@@ -57,27 +60,65 @@ def parse_line(parts):
         elif (parts[1].strip(":") == "false"):
             setattr(monkey, "if_false", parts[2:])
             monkeys.append(monkey)
+            monkey = None
         
-    
-with open(sys.argv[1], "r") as f:
-    
-    lines = f.read().splitlines()
-    for i,line in enumerate(lines):    
-        parse_line(line.split())
 
-for i,monkey in enumerate(monkeys):    
-    # calculate mod that won't affect tests
-    mod *= int(monkey.test[2])
 
-for _ in range(10000):
+def part1():
+    global monkey
+    global monkeys
+
+    monkeys = []
+    monkey = Monkey()
+
+    print("\n** PART 1 **")
+    with open(sys.argv[1], "r") as f:
+        lines = f.read().splitlines()
+        for i,line in enumerate(lines):    
+            parse_line(line.split())
+
+    for _ in range(20):
+        for i,monkey in enumerate(monkeys):
+            monkey.inspect_items()
+    
+    monkey_inspect_counts = []
     for i,monkey in enumerate(monkeys):
-        monkey.inspect_items()
-        
-monkey_inspect_counts = []
-for i,monkey in enumerate(monkeys):
-    print("Monkey", i, monkey.inspects)
-    monkey_inspect_counts.append(monkey.inspects);
+        # print("Monkey", i, monkey.inspects)
+        monkey_inspect_counts.append(monkey.inspects);
 
-print(sorted(monkey_inspect_counts))
-print(sorted(monkey_inspect_counts)[-2:])
-print(reduce((lambda x, y: x * y), sorted(monkey_inspect_counts)[-2:]))
+    print(sorted(monkey_inspect_counts)[-2:])
+    print(reduce((lambda x, y: x * y), sorted(monkey_inspect_counts)[-2:]))
+    
+
+def part2():
+    global monkey
+    global monkeys
+    global mod
+    
+    monkeys = []
+    monkey = Monkey()
+
+    print("\n** PART 2 **")
+    with open(sys.argv[1], "r") as f:
+        lines = f.read().splitlines()
+        for i,line in enumerate(lines):    
+            parse_line(line.split())
+
+    for i,monkey in enumerate(monkeys):    
+        # calculate mod that won't affect tests
+        mod *= int(monkey.test[2])
+
+    for _ in range(10000):
+        for i,monkey in enumerate(monkeys):
+            monkey.inspect_items()
+    
+    monkey_inspect_counts = []
+    for i,monkey in enumerate(monkeys):
+        # print("Monkey", i, monkey.inspects)
+        monkey_inspect_counts.append(monkey.inspects);
+        
+    print(sorted(monkey_inspect_counts)[-2:])
+    print(reduce((lambda x, y: x * y), sorted(monkey_inspect_counts)[-2:]))
+
+part1()
+part2()
